@@ -21,20 +21,17 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }, "src/_redirects"
+              "src/favicon.ico",
+              "src/assets",
+              "public"
             ],
             "styles": [
-  "node_modules/swiper/swiper-bundle.min.css",
-  "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
-  "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
-  "src/styles.scss"
-]},
-
-           
-          
+              "node_modules/swiper/swiper-bundle.min.css",
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+              "src/styles.scss"
+            ]
+          },
           "configurations": {
             "production": {
               "budgets": [
@@ -80,10 +77,9 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },"src/_redirects"
+              "src/favicon.ico",
+              "src/assets",
+              "public"
             ],
             "styles": [
               "src/styles.scss"
@@ -96,5 +92,4 @@
   "cli": {
     "analytics": false
   }
-  
 }
