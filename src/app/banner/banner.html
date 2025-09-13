@@ -1,0 +1,30 @@
+<div class="banner-carousel">
+  <div class="slides">
+    <div
+      class="slide"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentIndex"
+      [@slideAnimation]="i === currentIndex ? 'visible' : 'hidden'"
+    >
+      <img [src]="slide.image" alt="banner" />
+
+      <div
+        class="banner-overlay"
+        [ngClass]="{ 'banner-left-top': i === 2 }"
+      >
+        <h1 class="banner-headline">{{ slide.headline }}</h1>
+        <p class="banner-subtext">{{ slide.subtext }}</p>
+        <button class="banner-btn">{{ slide.cta }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dots">
+    <span
+      class="dot"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentIndex"
+      (click)="goToSlide(i)"
+    ></span>
+  </div>
+</div>

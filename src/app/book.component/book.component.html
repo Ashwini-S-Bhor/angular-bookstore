@@ -1,0 +1,141 @@
+<app-banner-carousel></app-banner-carousel>
+
+<div class="book-container">
+
+  <!-- Categories -->
+  <div class="shop-by-category">
+    <h2 class="section-title">SHOP BY CATEGORIES</h2>
+
+    <div class="categories-grid">
+      <a *ngFor="let cat of categories.slice(0, 5)"
+         [routerLink]="cat.route"
+         class="category-card">
+        <div class="category-icon">
+          <img [src]="cat.image" [alt]="cat.title" />
+        </div>
+        <p>{{ cat.title }}</p>
+      </a>
+    </div>
+
+    <div class="view-all-btn">
+      <button mat-flat-button color="accent" routerLink="/categories">
+        View all
+      </button>
+    </div>
+  </div>
+
+  
+  <div class="two-banners">
+    <div class="banner-card">
+      <img src="./banner2.png" alt="Banner 1" />
+    </div>
+    <div class="banner-card">
+      <img src="./banner1.png" alt="Banner 2" />
+    </div>
+  </div>
+
+  
+  <div class="selfhelp-section">
+    <h2 class="section-title"> Self-help (on sale)</h2>
+
+    <owl-carousel-o [options]="carouselOptions" class="book-carousel">
+      <ng-container *ngFor="let book of selfHelpBooks">
+        <ng-template carouselSlide>
+          <mat-card class="book-card" (click)="openBookDetails(book)">
+            <div class="image-wrapper">
+          
+              <span class="sale-ribbon">SALE</span>
+              <img [src]="book.image" alt="{{ book.title }} cover" />
+            </div>
+            <mat-card-content>
+              <h3 class="book-title">{{ book.title }}</h3>
+              <p class="book-author">by {{ book.author }}</p>
+              <p class="price">₹{{ book.price }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-flat-button color="primary" class="w-full"
+                      (click)="addToCart(book); $event.stopPropagation()">
+                Add to Cart
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+
+  
+  <div class="collection-header">
+    <h2 class="section-title">COLLECTIONS</h2>
+  </div>
+
+  <div class="book-grid">
+    <mat-card *ngFor="let book of paginatedBooks"
+              class="book-card"
+              (click)="openBookDetails(book)">
+      <div class="image-wrapper">
+        <img [src]="book.image" alt="{{ book.title }} cover" />
+      </div>
+      <mat-card-content>
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-author">by {{ book.author }}</p>
+        <span class="book-category">{{ book.category }}</span>
+        <p class="price">
+          ₹{{ book.price }}
+          <span *ngIf="book.discount" class="discount">-{{ book.discount }}%</span>
+        </p>
+        <div class="rating">
+          <span *ngFor="let star of [1,2,3,4,5]" 
+                [ngClass]="{'filled': star <= book.rating}">
+            ★
+          </span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" class="w-full"
+                (click)="addToCart(book); $event.stopPropagation()">
+          Add to Cart
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  
+  <div class="book-carousel">
+    <button class="nav-arrow left" (click)="prevPage()" [disabled]="currentPage === 0">←</button>
+    <button class="nav-arrow right"
+            (click)="nextPage()"
+            [disabled]="(currentPage + 1) * booksPerPage >= filteredBooks.length">→</button>
+  </div>
+
+  <div class="homepage-banner">
+  <div class="banner-content">
+    <div class="banner-image">
+      <img src="./habit2.jpg" alt="Reading Books">
+    </div>
+    <div class="banner-text">
+      <h2>You're one step away to make a good habit</h2>
+      <p>Shop your favourite book now!!!</p>
+      <button class="shop-btn">Shop Now</button>
+    </div>
+  </div>
+</div>
+<div class="shop-by-category">
+  
+  <div class="categories-grid">
+    <a *ngFor="let cat of nextCategories"
+       [routerLink]="cat.route"
+       class="category-card">
+      <div class="category-icon">
+        <img [src]="cat.image" [alt]="cat.title" />
+      </div>
+      <p>{{ cat.title }}</p>
+    </a>
+  </div>
+</div>
+
+
+  
+  <app-author-section></app-author-section>
+
+</div>

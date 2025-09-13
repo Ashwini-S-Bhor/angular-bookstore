@@ -1,0 +1,39 @@
+.terms-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  line-height: 1.8;
+}
+
+.terms-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #1e3c72;
+  border-bottom: 3px solid #ff6f61;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.terms-content h3 {
+  margin-top: 25px;
+  color: #1e3c72;
+}
+
+.terms-content p {
+  margin-bottom: 15px;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+.terms-content a {
+  color: #ff6f61;
+  text-decoration: none;
+}
+
+.terms-content a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,139 @@
+.cart-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #2d3748;
+    letter-spacing: 0.5px;
+  }
+
+  .cart-item {
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #edf2f7;
+    border-radius: 12px;
+    background: #f9fafb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .item-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .item-image {
+        width: 90px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+
+      .item-details {
+        flex: 1;
+
+        h3 {
+          font-size: 20px;
+          margin-bottom: 6px;
+          color: #1a202c;
+        }
+
+        p {
+          margin: 3px 0;
+          color: #4a5568;
+          font-size: 14px;
+        }
+
+        b {
+          color: #2b6cb0;
+        }
+
+        .quantity-control {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          button {
+            min-width: 36px;
+            font-weight: bold;
+          }
+
+          span {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+
+      button[color="warn"] {
+        align-self: flex-start;
+        margin-left: auto;
+        font-size: 13px;
+        padding: 6px 14px;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .total {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #e2e8f0;
+    text-align: center;
+
+    h3 {
+      font-size: 22px;
+      color: #2d3748;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      button {
+        flex: 1;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .continue {
+        background: #edf2f7;
+        color: #2d3748;
+
+        &:hover {
+          background: #e2e8f0;
+        }
+      }
+
+      .checkout {
+        background: #2b6cb0;
+        color: #fff;
+
+        &:hover {
+          background: #2c5282;
+        }
+      }
+    }
+  }
+}

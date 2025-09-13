@@ -1,0 +1,40 @@
+<div class="cart-container">
+  
+  <h2>Your Cart</h2>
+
+  <div *ngFor="let item of items" class="cart-item">
+    <div class="item-content">
+      <img [src]="item.image" alt="{{item.title}}" class="item-image" />
+
+      <div class="item-details">
+        <h3>{{ item.title }}</h3>
+        <p>by {{ item.author }}</p>
+        <p>Category: {{ item.category }}</p>
+        <p>₹{{ item.price }} × {{ item.quantity }}</p>
+        <p><b>Subtotal: ₹{{ item.price * item.quantity }}</b></p>
+
+        <div class="quantity-control">
+          <button mat-raised-button (click)="updateQuantity(item.title, -1)">-</button>
+          <span>{{ item.quantity }}</span>
+          <button mat-raised-button (click)="updateQuantity(item.title, 1)">+</button>
+        </div>
+      </div>
+
+      <button mat-raised-button color="warn" (click)="removeItem(item.title)">
+        Remove
+      </button>
+    </div>
+  </div>
+
+  <div class="total">
+    <h3>Total: ₹{{ totalPrice }}</h3>
+    <div class="actions">
+      <button mat-raised-button class="continue" routerLink="/home">
+        ← Continue Shopping
+      </button>
+      <button mat-raised-button class="checkout">
+        Proceed to Checkout →
+      </button>
+    </div>
+  </div>
+</div>

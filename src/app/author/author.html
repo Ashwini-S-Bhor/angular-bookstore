@@ -1,0 +1,15 @@
+<section #authorSection class="author-section" [class.visible]="isVisible">
+  <h2 class="section-title">Featured Authors</h2>
+
+  <owl-carousel-o [options]="customOptions" class="author-carousel">
+    <ng-container *ngFor="let author of authors">
+      <ng-template carouselSlide>
+        <div class="author-card">
+          <img [src]="author.image" [alt]="author.name" class="author-image" />
+          <h3 class="author-name">{{ author.name }}</h3>
+          
+        </div>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</section>
