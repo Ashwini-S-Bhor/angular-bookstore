@@ -17,13 +17,14 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/angular/browser",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public"
+              "src/public"
             ],
             "styles": [
               "node_modules/swiper/swiper-bundle.min.css",
@@ -79,7 +80,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public"
+              "src/public"
             ],
             "styles": [
               "src/styles.scss"
