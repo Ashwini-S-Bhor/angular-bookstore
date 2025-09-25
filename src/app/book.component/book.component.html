@@ -39,7 +39,7 @@
     <h2 class="section-title"> Self-help (on sale)</h2>
 
     <owl-carousel-o [options]="carouselOptions" class="book-carousel">
-      <ng-container *ngFor="let book of books | filterByCategory:'Self-help'">
+     <ng-container *ngFor="let book of books | filterByCategory:'Self-help'">
   <ng-template carouselSlide>
           <mat-card class="book-card" (click)="openBookDetails(book)">
             <div class="image-wrapper">
@@ -70,8 +70,8 @@
   </div>
 
   <div class="book-grid">
-    <mat-card *ngFor="let book of paginatedBooks"
-              class="book-card"
+    <mat-card *ngFor="let book of books" ...>
+          class="book-card"
               (click)="openBookDetails(book)">
       <div class="image-wrapper">
         <img [src]="book.image" alt="{{ book.title }} cover" />
@@ -105,7 +105,8 @@
     <button class="nav-arrow left" (click)="prevPage()" [disabled]="currentPage === 0">←</button>
     <button class="nav-arrow right"
             (click)="nextPage()"
-            [disabled]="(currentPage + 1) * booksPerPage >= filteredBooks.length">→</button>
+            [disabled]="(currentPage + 1) * booksPerPage >= totalBooks"
+>→</button>
   </div>
 
   <div class="homepage-banner">

@@ -27,8 +27,8 @@
       <p>{{ book.description || 'No description available.' }}</p>
     </div>
 
-    <div class="reviews-section" *ngIf="book?.reviews && book.reviews.length > 0">
-   <h3>Reviews</h3>
+    <div class="reviews-section" *ngIf="book?.reviews?.length"> 
+ <h3>Reviews</h3>
       <div class="review" *ngFor="let r of book.reviews">
         <strong>{{ r.user }}</strong> (⭐{{ r.rating }})
         <p>{{ r.comment }}</p>
