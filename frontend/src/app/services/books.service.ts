@@ -24,7 +24,7 @@ export interface Book {
 })
 export class BooksService {
   // Use proxy if you run ng serve with proxy.conf.json
-  private base = 'https://angular-bookstore-backend.onrender.com/api/books';
+  private base = 'https://angular-bookstore.onrender.com/api/books';
 
   constructor(private http: HttpClient) {}
 
