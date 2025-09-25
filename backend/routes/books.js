@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
     if (!payload.title) return res.status(400).json({ error: 'title required' });
 
     const slug = slugify(payload.title, { lower: true, strict: true });
-    const book = new (require('../models/Book'))({ ...payload, slug });
+    const book = new (require('../models/book'))({ ...payload, slug });
     await book.save();
     res.status(201).json(book);
   } catch (err) {
