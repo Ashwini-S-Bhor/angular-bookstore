@@ -1,10 +1,11 @@
+// src/app/book-detail/book-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CartService } from '../services/cart';
-import { BookComponent } from '../book.component/book.component'; // to access books
+import { BooksService, Book } from '../services/books.service';
 
 @Component({
   selector: 'app-book-details',
@@ -14,29 +15,35 @@ import { BookComponent } from '../book.component/book.component'; // to access b
   styleUrls: ['./book-detail.scss']
 })
 export class BookDetailsComponent implements OnInit {
-  book: any = null;
+  book: Book | null = null;
+  loading = false;
+  error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private booksService: BooksService
   ) {}
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
-    if (slug) {
-      
-      const allBooks = new BookComponent(
-        this.route,
-        this.cartService,
-        { getCategories: () => [] } as any,
-        this.router
-      ).books;
+    if (!slug) return;
 
-      this.book = allBooks.find(
-        b => b.title.toLowerCase().replace(/\s+/g, '-') === slug
-      );
-    }
+    this.loading = true;
+    this.booksService.getBySlug(slug).subscribe({
+      next: (b) => {
+        this.book = b;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load book by slug', err);
+        this.error = 'Book not found';
+        this.loading = false;
+        // optional redirect:
+        // this.router.navigate(['/']);
+      }
+    });
   }
 
   addToCart() {
