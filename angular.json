@@ -23,7 +23,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public"
+              "src/public"
             ],
             "styles": [
               "node_modules/swiper/swiper-bundle.min.css",
