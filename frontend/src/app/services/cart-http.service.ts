@@ -15,7 +15,8 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartHttpService {
-  private base = 'http://localhost:4000/api/cart';
+  private base =  'https://angular-bookstore-backend.onrender.com/api/cart';
+
 
   constructor(private http: HttpClient) {}
 
