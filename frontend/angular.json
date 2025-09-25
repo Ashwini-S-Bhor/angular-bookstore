@@ -23,7 +23,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/public"
+             {
+    "glob": "**/*",
+    "input": "src/public",
+    "output": "/"
+  }
             ],
             "styles": [
               "node_modules/swiper/swiper-bundle.min.css",
@@ -79,7 +83,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/public"
+              {
+    "glob": "**/*",
+    "input": "src/public",
+    "output": "/"
+  }
             ],
             "styles": [
               "src/styles.scss"
