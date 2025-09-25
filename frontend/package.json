@@ -2,14 +2,14 @@
   "name": "angular",
   "version": "0.0.0",
  
-  "scripts": {
+ "scripts": {
   "ng": "ng",
   "start": "ng serve",
   "build": "ng build --configuration production",
-  "postbuild": "mkdir -p dist/angular/browser/browser && cp -a dist/angular/browser/. dist/angular/browser/browser/",
   "test": "ng test",
   "serve:ssr:angular": "node dist/angular/server/server.mjs"
-},
+}
+,
 
   "prettier": {
     "printWidth": 100,
