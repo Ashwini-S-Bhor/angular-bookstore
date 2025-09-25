@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const slugify = require('slugify');
-const Book = require('../models/Book');
+const Book = require('../models/book');
 
 router.get('/', async (req, res) => {
   try {
