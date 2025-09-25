@@ -13,6 +13,7 @@ import { BooksService } from '../services/books.service';
 import { CategoryService, Category } from '../services/category.services';
 import { BannerCarouselComponent } from '../banner/banner';
 import { AuthorSectionComponent } from '../author/author';
+import { FilterByCategoryPipe } from '../pipes/filter-by-category.pipe';
 
 interface Book {
   _id?: string;
@@ -52,7 +53,8 @@ function getOrCreateGuestId(): string {
     RouterModule,
     BannerCarouselComponent,
     AuthorSectionComponent,
-    CarouselModule
+    CarouselModule,
+    FilterByCategoryPipe
   ],
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.scss'],

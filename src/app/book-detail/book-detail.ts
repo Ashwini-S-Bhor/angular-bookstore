@@ -10,7 +10,7 @@ import { BooksService, Book } from '../services/books.service';
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule,],
   templateUrl: './book-detail.html',
   styleUrls: ['./book-detail.scss']
 })
