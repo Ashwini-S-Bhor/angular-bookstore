@@ -286,3 +286,76 @@ $bp-xs: 480px;
   .navbar { padding: 0 8px; }
   .search-box { width: 96%; }
 }
+/* ====== LAYOUT FIX ADD-ONS (keep base same) ====== */
+
+/* Let flex children actually shrink instead of overflowing */
+.navbar > * { min-width: 0; }
+
+/* Tablet & down: allow wrapping; create breathing space between rows */
+@media (max-width: 992px) {
+  .navbar {
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 8px;
+  }
+
+  /* Buttons behave better in tight space */
+  .navbar button[mat-button] {
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  /* Keep cart from pushing layout */
+  .navbar .cart-icon {
+    flex: 0 0 auto;
+  }
+}
+
+/* Mobile: push search bar to its own full-width row under the navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  /* The spacer can collapse so items don’t fight for space */
+  .navbar .spacer {
+    flex: 0 0 0;
+  }
+
+  /* Put search bar on next line, full width */
+  .search-box {
+    order: 3;              /* after left and right clusters */
+    flex: 1 1 100%;
+    width: 100% !important;
+    margin: 8px 0 0 0;     /* space under navbar */
+  }
+
+  /* Keep logo from overflowing */
+  .navbar .logo .brand {
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Small phones: compress controls more aggressively */
+@media (max-width: 480px) {
+  /* If you add class="hide-on-mobile" to non-critical buttons, they’ll disappear here */
+  .navbar .hide-on-mobile { display: none !important; }
+
+  /* Icon-only option: add class="as-icon" to mat-button in HTML */
+  .navbar button[mat-button].as-icon {
+    min-width: auto;
+    padding: 0 4px;
+    line-height: 1;
+  }
+  /* Angular Material label wrapper */
+  .navbar button[mat-button].as-icon .mat-button-wrapper span {
+    display: none;
+  }
+  .navbar button[mat-button].as-icon mat-icon {
+    margin: 0;
+    font-size: 22px;
+  }
+}
