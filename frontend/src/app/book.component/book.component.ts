@@ -161,10 +161,12 @@ export class BookComponent implements OnInit, OnDestroy {
     }
   }
 
-  openBookDetails(book: Book) {
-    const slug = book.slug || book.title.toLowerCase().replace(/\s+/g, '-');
-    this.router.navigate(['/book', slug]);
-  }
+ openBookDetails(book: Book) {
+  const idOrSlug = book.slug || book._id;  // ✅ use real slug, else _id
+  if (!idOrSlug) return;
+  this.router.navigate(['/book', idOrSlug]);
+}
+
 
   addToCart(book: Book) {
     const item = {
