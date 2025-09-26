@@ -39,7 +39,7 @@
     <h2 class="section-title"> Self-help (on sale)</h2>
 
     <owl-carousel-o [options]="carouselOptions" class="book-carousel">
-     <ng-container *ngFor="let book of books | filterByCategory:'Self-help'">
+    <ng-container *ngFor="let book of (books | filterByCategory:'Self-help') | slice:0:5">
   <ng-template carouselSlide>
           <mat-card class="book-card" (click)="openBookDetails(book)">
             <div class="image-wrapper">
