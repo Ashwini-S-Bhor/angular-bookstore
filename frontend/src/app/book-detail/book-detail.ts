@@ -1,4 +1,3 @@
-// src/app/book-detail/book-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,9 +9,9 @@ import { BooksService, Book } from '../services/books.service';
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule,],
+  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule],
   templateUrl: './book-detail.html',
-  styleUrls: ['./book-detail.scss']
+  styleUrls: ['./book-detail.scss'],
 })
 export class BookDetailsComponent implements OnInit {
   book: Book | null = null;
@@ -27,22 +26,23 @@ export class BookDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (!slug) return;
+    const idOrSlug = this.route.snapshot.paramMap.get('slug'); // param name can stay "slug"
+    if (!idOrSlug) return;
 
     this.loading = true;
-    this.booksService.getBySlug(slug).subscribe({
+    this.booksService.getOne(idOrSlug).subscribe({
       next: (b) => {
-        this.book = b;
+        // ensure reviews is always an array
+        this.book = { ...b, reviews: b.reviews ?? [] };
         this.loading = false;
       },
       error: (err) => {
-        console.error('Failed to load book by slug', err);
+        console.error('Failed to load book', err);
         this.error = 'Book not found';
         this.loading = false;
-        // optional redirect:
+        // optionally redirect:
         // this.router.navigate(['/']);
-      }
+      },
     });
   }
 
@@ -54,7 +54,7 @@ export class BookDetailsComponent implements OnInit {
       image: this.book.image,
       category: this.book.category,
       price: this.book.price,
-      quantity: 1
+      quantity: 1,
     });
     alert(`${this.book.title} added to cart!`);
   }

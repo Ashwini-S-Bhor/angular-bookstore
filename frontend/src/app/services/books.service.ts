@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Book {
@@ -19,35 +19,29 @@ export interface Book {
   reviews?: any[];
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BooksService {
-  // Use proxy if you run ng serve with proxy.conf.json
   private base = 'https://angular-bookstore.onrender.com/api/books';
 
   constructor(private http: HttpClient) {}
 
   list(page = 0, limit = 10, search = '', category = ''): Observable<any> {
-    const params: any = { page: String(page), limit: String(limit) };
-    if (search) params.search = search;
-    if (category) params.category = category;
+    let params = new HttpParams().set('page', String(page)).set('limit', String(limit));
+    if (search)   params = params.set('search', search);
+    if (category) params = params.set('category', category);
     return this.http.get<any>(this.base, { params });
   }
 
-  getBySlug(slug: string) {
-    return this.http.get<Book>(`${this.base}/${slug}`);
+  /** Works with either _id OR slug */
+  getOne(idOrSlug: string): Observable<Book> {
+    return this.http.get<Book>(`${this.base}/${encodeURIComponent(idOrSlug)}`);
   }
 
-  create(book: Partial<Book>) {
-    return this.http.post<Book>(this.base, book);
-  }
+  // (optional helpers if you like these names)
+  getById(id: string)   { return this.getOne(id); }
+  getBySlug(slug: string) { return this.getOne(slug); }
 
-  update(id: string, payload: Partial<Book>) {
-    return this.http.put<Book>(`${this.base}/${id}`, payload);
-  }
-
-  delete(id: string) {
-    return this.http.delete(`${this.base}/${id}`);
-  }
+  create(book: Partial<Book>) { return this.http.post<Book>(this.base, book); }
+  update(id: string, payload: Partial<Book>) { return this.http.put<Book>(`${this.base}/${id}`, payload); }
+  delete(id: string) { return this.http.delete(`${this.base}/${id}`); }
 }
