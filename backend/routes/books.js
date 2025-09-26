@@ -1,8 +1,10 @@
+// routes/books.js
 const express = require('express');
 const router = express.Router();
 const slugify = require('slugify');
 const Book = require('../models/book');
 
+// LIST: /api/books
 router.get('/', async (req, res) => {
   try {
     const page = Math.max(0, parseInt(req.query.page || '0', 10));
@@ -16,7 +18,7 @@ router.get('/', async (req, res) => {
       filter.$or = [
         { title: { $regex: search, $options: 'i' } },
         { author: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
+        { description: { $regex: search, $options: 'i' } },
       ];
     }
 
@@ -24,8 +26,7 @@ router.get('/', async (req, res) => {
     const books = await Book.find(filter)
       .sort({ createdAt: -1 })
       .skip(page * limit)
-      .limit(limit)
-      .exec();
+      .limit(limit);
 
     res.json({ page, limit, total, books });
   } catch (err) {
@@ -34,19 +35,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/books/:slug
-router.get('/:slug', async (req, res) => {
-  try {
-    const book = await Book.findOne({ slug: req.params.slug });
-    if (!book) return res.status(404).json({ error: 'Book not found' });
-    res.json(book);
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// GET /api/categories
-router.get('/meta/categories/list', async (req, res) => {
+// META: /api/books/meta/categories/list  (place BEFORE param route)
+router.get('/meta/categories/list', async (_req, res) => {
   try {
     const categories = await Book.distinct('category');
     res.json({ categories });
@@ -55,36 +45,57 @@ router.get('/meta/categories/list', async (req, res) => {
   }
 });
 
-// POST /api/books - add book (you can protect this later)
-router.post('/', async (req, res) => {
+// DETAILS (id or slug): /api/books/:idOrSlug
+router.get('/:idOrSlug', async (req, res) => {
   try {
-    const payload = req.body;
-    if (!payload.title) return res.status(400).json({ error: 'title required' });
+    const { idOrSlug } = req.params;
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(idOrSlug);
 
-    const slug = slugify(payload.title, { lower: true, strict: true });
-    const book = new (require('../models/book'))({ ...payload, slug });
-    await book.save();
-    res.status(201).json(book);
+    const book = isObjectId
+      ? await Book.findById(idOrSlug)
+      : await Book.findOne({ slug: idOrSlug });
+
+    if (!book) return res.status(404).json({ error: 'Book not found' });
+    res.json(book);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// PUT /api/books/:id - update
+// CREATE: /api/books
+router.post('/', async (req, res) => {
+  try {
+    const payload = req.body || {};
+    if (!payload.title) return res.status(400).json({ error: 'title required' });
+
+    const slug = slugify(payload.title, { lower: true, strict: true });
+    const book = new Book({ ...payload, slug });
+    await book.save();
+    res.status(201).json(book);
+  } catch (err) {
+    console.error(err);
+    if (err.code === 11000) return res.status(409).json({ error: 'Slug already exists' });
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// UPDATE: /api/books/:id
 router.put('/:id', async (req, res) => {
   try {
     const updated = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ error: 'Book not found' });
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// DELETE /api/books/:id
+// DELETE: /api/books/:id
 router.delete('/:id', async (req, res) => {
   try {
-    await Book.findByIdAndDelete(req.params.id);
+    const deleted = await Book.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Book not found' });
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
