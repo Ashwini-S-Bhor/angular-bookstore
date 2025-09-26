@@ -63,7 +63,7 @@ export class BookComponent implements OnInit, OnDestroy {
   search = '';
   selectedCategory: string | null = null;
   currentPage = 0;
-  booksPerPage = 8;
+  booksPerPage = 5;
 
   books: Book[] = [];
   totalBooks = 0;
