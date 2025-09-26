@@ -133,3 +133,97 @@
     color: #94a3b8; // muted blue-gray
   }
 }
+/* =========================
+   RESPONSIVENESS (ADD-ON)
+   ========================= */
+$bp-lg: 1200px;
+$bp-md: 992px;
+$bp-sm: 768px;
+$bp-xs: 480px;
+
+/* --- <= 1200px --- */
+@media (max-width: $bp-lg) {
+  .footer {
+    padding: 50px 16px 16px;
+
+    .footer-container {
+      gap: 30px;
+    }
+  }
+}
+
+/* --- <= 992px --- */
+@media (max-width: $bp-md) {
+  .footer {
+    .footer-container {
+      grid-template-columns: 1fr 1fr; /* 2 columns */
+      gap: 25px;
+    }
+
+    .footer-newsletter form {
+      flex-direction: column;
+      align-items: stretch;
+
+      input, button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* --- <= 768px --- */
+@media (max-width: $bp-sm) {
+  .footer {
+    padding: 40px 14px 14px;
+
+    .footer-container {
+      grid-template-columns: 1fr; /* single column */
+      gap: 20px;
+      text-align: center;
+    }
+
+    .footer-about {
+      .logo {
+        justify-content: center;
+      }
+      .social-icons {
+        justify-content: center;
+      }
+    }
+
+    .footer-links ul li a:hover {
+      padding-left: 0; /* prevent awkward shift in center layout */
+    }
+
+    .footer-newsletter form {
+      flex-direction: column;
+      input, button {
+        width: 100%;
+      }
+    }
+
+    .footer-newsletter .payments {
+      justify-content: center;
+    }
+  }
+}
+
+/* --- <= 480px --- */
+@media (max-width: $bp-xs) {
+  .footer {
+    padding: 30px 10px 10px;
+
+    .footer-about .logo h2 {
+      font-size: 18px;
+    }
+
+    .footer-links h3,
+    .footer-newsletter h3 {
+      font-size: 16px;
+    }
+
+    .footer-bottom {
+      font-size: 12px;
+    }
+  }
+}

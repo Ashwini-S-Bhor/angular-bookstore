@@ -159,3 +159,130 @@
 .search-box button:last-child:hover mat-icon {
   color: #c0392b !important;
 }
+/* =========================
+   RESPONSIVENESS (ADD-ON)
+   ========================= */
+$bp-lg: 1200px;
+$bp-md: 992px;
+$bp-sm: 768px;
+$bp-xs: 480px;
+
+/* --- <= 1200px --- */
+@media (max-width: $bp-lg) {
+  .navbar {
+    height: 72px;
+    padding: 0 16px;
+  }
+  .search-box {
+    width: 55%;
+    height: 42px;
+  }
+}
+
+/* --- <= 992px --- */
+@media (max-width: $bp-md) {
+  .navbar {
+    height: 68px;
+  }
+  .navbar .logo {
+    font-size: 20px;
+  }
+  .navbar .logo mat-icon {
+    font-size: 24px;
+  }
+  .navbar button[mat-button] {
+    font-size: 14px;
+    padding: 4px 6px;
+    margin: 0 4px;
+  }
+  .navbar .cart-icon button mat-icon {
+    font-size: 24px;
+  }
+  .search-box {
+    width: 70%;
+  }
+}
+
+/* --- <= 768px --- */
+@media (max-width: $bp-sm) {
+  .navbar {
+    height: 64px;
+    padding: 0 12px;
+  }
+  .navbar .logo {
+    font-size: 18px;
+  }
+  .navbar .logo mat-icon {
+    font-size: 22px;
+  }
+  .navbar .cart-icon .cart-count {
+    top: -5px;
+    right: -5px;
+    font-size: 11px;
+    padding: 2px 5px;
+  }
+  .navbar button[mat-button] {
+    font-size: 13px;
+    padding: 4px 6px;
+    margin: 0 2px;
+  }
+  /* optional helper classes you can add in HTML */
+  .navbar .hide-on-mobile { display: none !important; }
+
+  .search-box {
+    width: 86%;
+    height: 40px;
+    padding: 3px 10px;
+  }
+  .search-box input {
+    font-size: 15px;
+    padding: 4px 8px;
+  }
+  .search-box button mat-icon {
+    font-size: 20px;
+  }
+}
+
+/* --- <= 480px --- */
+@media (max-width: $bp-xs) {
+  .navbar {
+    height: 58px;
+    padding: 0 10px;
+  }
+  .navbar .logo {
+    font-size: 16px;
+  }
+  .navbar .logo .brand {
+    max-width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* if you add class="as-icon" to wide buttons, labels hide on tiny screens */
+  .navbar button[mat-button].as-icon {
+    min-width: auto;
+    padding: 0 4px;
+    line-height: 1;
+  }
+  .navbar button[mat-button].as-icon span {
+    display: none;
+  }
+  .navbar button[mat-button].as-icon mat-icon {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  .search-box {
+    width: 94%;
+    height: 38px;
+  }
+  .search-box input {
+    font-size: 14px;
+  }
+}
+
+/* --- <= 360px (ultra-narrow) --- */
+@media (max-width: 360px) {
+  .navbar { padding: 0 8px; }
+  .search-box { width: 96%; }
+}
