@@ -13,7 +13,10 @@ router.get('/', async (req, res) => {
     const category = (req.query.category || '').trim();
 
     const filter = {};
-    if (category) filter.category = { $regex: new RegExp('^' + category + '$', 'i') };
+    if (category) {
+      // match "contains", case-insensitive (Kids == kids == kids books)
+      filter.category = { $regex: category, $options: 'i' };
+    }
     if (search) {
       filter.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -35,7 +38,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// META: /api/books/meta/categories/list  (place BEFORE param route)
+// META (put BEFORE param route): /api/books/meta/categories/list
 router.get('/meta/categories/list', async (_req, res) => {
   try {
     const categories = await Book.distinct('category');
