@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -22,20 +22,26 @@ export class BookDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService,
-    private booksService: BooksService
+    private booksService: BooksService,
+    private cdr: ChangeDetectorRef  
   ) {}
 
  
   ngOnInit() {
-  const idOrSlug = this.route.snapshot.paramMap.get('slug');
-  if (!idOrSlug) { this.error = 'Book not found'; return; }
+  const idOrSlug = this.route.snapshot.paramMap.get('idOrSlug');
+ if (!idOrSlug) { this.error = 'Book not found'; return; }
 
   this.loading = true;
   this.error = null;
 
   this.booksService.getOne(idOrSlug).subscribe({
-    next: (b) => { this.book = { ...b, reviews: b.reviews ?? [] }; this.loading = false; },
-    error: () => { this.error = 'Book not found'; this.loading = false; }
+    next: (b) => { this.book = { ...b, reviews: b.reviews ?? [] }; this.loading = false;
+   this.cdr.markForCheck();       
+   },
+    error: () => { this.error = 'Book not found'; this.loading = false;
+      this.cdr.markForCheck();      
+ 
+     }
   });
 }
 
