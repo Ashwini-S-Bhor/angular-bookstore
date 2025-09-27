@@ -54,6 +54,8 @@ export class NavbarComponent implements OnInit {
 
   toggleSearch() {
     this.showSearch = !this.showSearch; 
+    this.isMenuOpen = false; // ✅ close menu when search is toggled
+
   }
    toggleMenu() { this.isMenuOpen = !this.isMenuOpen; }
   closeMenu()  { this.isMenuOpen = false; }
