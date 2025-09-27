@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
   cartCount = 0;
   searchQuery = '';
   showSearch = false; 
+ isMenuOpen = false;
 
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -46,10 +47,15 @@ export class NavbarComponent implements OnInit {
         queryParams: { q: this.searchQuery }
       });
       this.showSearch = false;
+       this.isMenuOpen = false; 
+  
     }
   }
 
   toggleSearch() {
     this.showSearch = !this.showSearch; 
   }
+   toggleMenu() { this.isMenuOpen = !this.isMenuOpen; }
+  closeMenu()  { this.isMenuOpen = false; }
 }
+
