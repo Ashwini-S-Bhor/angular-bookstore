@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const Book = require('../models/Book');
+const Book = require('../models/book');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://ashwinishinde9605_db_user:NMlL7ThIJ71etweU@cluster0.sdaeaqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
