@@ -1,4 +1,10 @@
-<ng-container *ngIf="book; else notFound">
+<!-- 1) Loading -->
+<ng-container *ngIf="loading">
+  <p>Loading book details…</p>
+</ng-container>
+
+<!-- 2) Success -->
+<ng-container *ngIf="!loading && book">
   <mat-card class="book-detail-card">
     <div class="book-header">
       <img [src]="book.image" alt="{{ book.title }} cover" class="book-cover" />
@@ -6,17 +12,14 @@
         <h2>{{ book.title }}</h2>
         <p class="author">by {{ book.author }}</p>
         <p class="category"><strong>Category:</strong> {{ book.category }}</p>
-        <p class="language"><strong>Language:</strong> {{ book.language }}</p>
-        <p class="year"><strong>Year:</strong> {{ book.year }}</p>
+        <p class="language" *ngIf="book.language"><strong>Language:</strong> {{ book.language }}</p>
+        <p class="year" *ngIf="book.year"><strong>Year:</strong> {{ book.year }}</p>
         <p class="price">
           ₹{{ book.price }}
           <span *ngIf="book.discount" class="discount">-{{ book.discount }}%</span>
         </p>
         <div class="rating">
-          <span *ngFor="let star of [1,2,3,4,5]" 
-                [ngClass]="{'filled': star <= book.rating}">
-            ★
-          </span>
+          <span *ngFor="let star of [1,2,3,4,5]" [ngClass]="{ filled: star <= book.rating }">★</span>
         </div>
         <button mat-flat-button color="primary" (click)="addToCart()">Add to Cart</button>
       </div>
@@ -27,16 +30,20 @@
       <p>{{ book.description || 'No description available.' }}</p>
     </div>
 
-    <div class="reviews-section" *ngIf="book?.reviews?.length"> 
- <h3>Reviews</h3>
-      <div class="review" *ngFor="let r of book.reviews">
-        <strong>{{ r.user }}</strong> (⭐{{ r.rating }})
-        <p>{{ r.comment }}</p>
-      </div>
+    <div class="reviews-section">
+      <h3>Reviews</h3>
+      <ng-container *ngIf="book.reviews?.length; else noReviews">
+        <div class="review" *ngFor="let r of book.reviews">
+          <strong>{{ r.user }}</strong> (⭐{{ r.rating }})
+          <p>{{ r.comment }}</p>
+        </div>
+      </ng-container>
+      <ng-template #noReviews><p>No reviews yet.</p></ng-template>
     </div>
   </mat-card>
 </ng-container>
 
-<ng-template #notFound>
+<!-- 3) Error -->
+<ng-container *ngIf="!loading && error">
   <p>Book not found.</p>
-</ng-template>
+</ng-container>

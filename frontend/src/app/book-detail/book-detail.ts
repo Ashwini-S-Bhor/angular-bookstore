@@ -25,26 +25,20 @@ export class BookDetailsComponent implements OnInit {
     private booksService: BooksService
   ) {}
 
+ 
   ngOnInit() {
-    const idOrSlug = this.route.snapshot.paramMap.get('slug'); // param name can stay "slug"
-    if (!idOrSlug) return;
+  const idOrSlug = this.route.snapshot.paramMap.get('slug');
+  if (!idOrSlug) { this.error = 'Book not found'; return; }
 
-    this.loading = true;
-    this.booksService.getOne(idOrSlug).subscribe({
-      next: (b) => {
-        // ensure reviews is always an array
-        this.book = { ...b, reviews: b.reviews ?? [] };
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load book', err);
-        this.error = 'Book not found';
-        this.loading = false;
-        // optionally redirect:
-        // this.router.navigate(['/']);
-      },
-    });
-  }
+  this.loading = true;
+  this.error = null;
+
+  this.booksService.getOne(idOrSlug).subscribe({
+    next: (b) => { this.book = { ...b, reviews: b.reviews ?? [] }; this.loading = false; },
+    error: () => { this.error = 'Book not found'; this.loading = false; }
+  });
+}
+
 
   addToCart() {
     if (!this.book) return;
