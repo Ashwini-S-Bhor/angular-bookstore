@@ -32,12 +32,20 @@ export class BooksService {
     return this.http.get<any>(this.base, { params });
   }
 
-  /** Works with either _id OR slug */
-  getOne(idOrSlug: string): Observable<Book> {
-    return this.http.get<Book>(`${this.base}/${encodeURIComponent(idOrSlug)}`);
-  }
+  
+ getOne(idOrSlug: string): Observable<Book> {
+  const url = `${this.base}/${encodeURIComponent(idOrSlug)}`;
+  const params = new HttpParams().set('_', Date.now().toString()); // cache-buster
+  return this.http.get<Book>(url, {
+    params,
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'
+    }
+  });
+}
 
-  // (optional helpers if you like these names)
+  
   getById(id: string)   { return this.getOne(id); }
   getBySlug(slug: string) { return this.getOne(slug); }
 

@@ -51,6 +51,8 @@ router.get('/meta/categories/list', async (_req, res) => {
 // DETAILS (id or slug): /api/books/:idOrSlug
 router.get('/:idOrSlug', async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store');
+
     const { idOrSlug } = req.params;
     const isObjectId = /^[0-9a-fA-F]{24}$/.test(idOrSlug);
 
