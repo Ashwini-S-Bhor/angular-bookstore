@@ -8,16 +8,18 @@
   <span class="spacer" *ngIf="!showSearch"></span>
 
   <!-- Desktop Navigation -->
-  <ng-container *ngIf="!showSearch" class="hide-on-mobile">
-    <button mat-button routerLink="/home">Home</button>
-    <button mat-button routerLink="/categories">Product Categories</button>
-    <button mat-button routerLink="/bulk-purchase">Bulk Purchase</button>
-    <button mat-button routerLink="/about">About Us</button>
-    <button mat-button routerLink="/return-replacement">Return & Replacement</button>
-    <button mat-button routerLink="/contact-us">Contact Us</button>
-    <button mat-button routerLink="/terms">Terms & Conditions</button>
-    <button mat-button routerLink="/policy">Privacy Policy</button>
-  </ng-container>
+  <!-- Desktop Navigation -->
+<div *ngIf="!showSearch" class="nav-links hide-on-mobile">
+  <button mat-button routerLink="/home">Home</button>
+  <button mat-button routerLink="/categories">Product Categories</button>
+  <button mat-button routerLink="/bulk-purchase">Bulk Purchase</button>
+  <button mat-button routerLink="/about">About Us</button>
+  <button mat-button routerLink="/return-replacement">Return & Replacement</button>
+  <button mat-button routerLink="/contact-us">Contact Us</button>
+  <button mat-button routerLink="/terms">Terms & Conditions</button>
+  <button mat-button routerLink="/policy">Privacy Policy</button>
+</div>
+
 
   <!-- Search Box -->
   <form *ngIf="showSearch" class="search-box" (ngSubmit)="onSearch()">
