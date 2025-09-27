@@ -6,9 +6,7 @@ const Book = require('../models/book');
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://ashwinishinde9605_db_user:NMlL7ThIJ71etweU@cluster0.sdaeaqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 const books = [
-  // copy your provided book objects here but add 'slug' using slugify
-  // I'll include a few as examples. Replace or append the whole list you had.
-  { title: 'The Lady of the Rivers', author:'Philippa Gregory', image: './river.jpg', category: 'Novel', rating: 4 ,price:500, discount:10,stock:10,language:'English',year:2013,reviews: [
+    { title: 'The Lady of the Rivers', author:'Philippa Gregory', image: './river.jpg', category: 'Novel', rating: 4 ,price:500, discount:10,stock:10,language:'English',year:2013,reviews: [
         { user: 'Aarav', comment: 'Loved the storytelling.', rating: 5 },
         { user: 'Mira', comment: 'A bit slow in the middle.', rating: 3 },
        
