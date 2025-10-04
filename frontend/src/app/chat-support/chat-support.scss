@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #25d366; // WhatsApp green
+  background: #25d366; /* WhatsApp green */
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -13,17 +13,16 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   z-index: 1000;
   transition: transform 0.2s;
-
-  &:hover {
-    transform: scale(1.1);
-    background: #1ebe5a;
-  }
-
-  svg {
-    pointer-events: none; 
-  }
 }
 
+.chat-support:hover {
+  transform: scale(1.1);
+  background: #1ebe5a;
+}
+
+.chat-support svg {
+  pointer-events: none; 
+}
 
 .chat-window {
   position: fixed;
@@ -37,92 +36,137 @@
   flex-direction: column;
   z-index: 1000;
   overflow: hidden;
+}
 
-  .chat-header {
-    background: #075e54;
-    color: white;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* ==== Chat Header ==== */
+.chat-window .chat-header {
+  background: #075e54;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    h4 {
-      margin: 0;
-      font-size: 16px;
-    }
+.chat-window .chat-header h4 {
+  margin: 0;
+  font-size: 16px;
+}
 
-    .close-btn {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
+.chat-window .chat-header .close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ==== Chat Body ==== */
+.chat-window .chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-window .chat-body .user,
+.chat-window .chat-body .support {
+  max-width: 75%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+}
+
+.chat-window .chat-body .user p,
+.chat-window .chat-body .support p {
+  margin: 0;
+}
+
+.chat-window .chat-body .time {
+  font-size: 10px;
+  color: #666;
+  position: absolute;
+  bottom: -12px;
+  right: 6px;
+}
+
+.chat-window .chat-body .user {
+  background: #dcf8c6;
+  align-self: flex-end;
+  border-radius: 10px 10px 0 10px;
+}
+
+.chat-window .chat-body .support {
+  background: #fff;
+  align-self: flex-start;
+  border-radius: 10px 10px 10px 0;
+}
+
+/* ==== Chat Footer ==== */
+.chat-window .chat-footer {
+  display: flex;
+  border-top: 1px solid #ccc;
+  background: #f0f0f0;
+}
+
+.chat-window .chat-footer input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.chat-window .chat-footer button {
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ==== Responsive Styles ==== */
+@media (max-width: 768px) {
+  .chat-window {
+    width: 90%;        /* take most of the screen */
+    right: 5%;         /* center horizontally */
+    bottom: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-support {
+    width: 50px;
+    height: 50px;
   }
 
-  .chat-body {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    .user, .support {
-      max-width: 75%;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.4;
-      position: relative;
-
-      p {
-        margin: 0;
-      }
-
-      .time {
-        font-size: 10px;
-        color: #666;
-        position: absolute;
-        bottom: -12px;
-        right: 6px;
-      }
-    }
-
-    .user {
-      background: #dcf8c6;
-      align-self: flex-end;
-      border-radius: 10px 10px 0 10px;
-    }
-
-    .support {
-      background: #fff;
-      align-self: flex-start;
-      border-radius: 10px 10px 10px 0;
-    }
+  .chat-window {
+    width: 95%;        /* almost full screen on mobile */
+    right: 2.5%;
+    bottom: 70px;
+    border-radius: 8px;
   }
 
-  .chat-footer {
-    display: flex;
-    border-top: 1px solid #ccc;
-    background: #f0f0f0;
+  .chat-window .chat-header h4 {
+    font-size: 14px;
+  }
 
-    input {
-      flex: 1;
-      border: none;
-      padding: 10px;
-      font-size: 14px;
-      outline: none;
-      border-radius: 0;
-    }
+  .chat-window .chat-body {
+    font-size: 13px;
+  }
 
-    button {
-      background: #25d366;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+  .chat-window .chat-footer input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .chat-window .chat-footer button {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 }
