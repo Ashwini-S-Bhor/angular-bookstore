@@ -7,9 +7,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
-import { CartService } from '../services/cart';                      
-import { CartHttpService } from '../services/cart-http.service';     
-import { BooksService } from '../services/books.service';            
+import { CartService } from '../services/cart';
+import { CartHttpService } from '../services/cart-http.service';
+import { BooksService } from '../services/books.service';
 import { CategoryService, Category } from '../services/category.services';
 import { BannerCarouselComponent } from '../banner/banner';
 import { AuthorSectionComponent } from '../author/author';
@@ -69,6 +69,9 @@ export class BookComponent implements OnInit, OnDestroy {
   totalBooks = 0;
   categories: Category[] = [];
 
+  /** Dedicated list for the Self-help carousel */
+  selfHelpBooks: Book[] = [];
+
   private destroy$ = new Subject<void>();
   private guestId = getOrCreateGuestId();
 
@@ -81,7 +84,7 @@ export class BookComponent implements OnInit, OnDestroy {
       0: { items: 1 },
       600: { items: 2 },
       900: { items: 3 },
-      1200: { items: 5 }
+      1200: { items: 5 } // show 5 on wide screens
     }
   };
 
@@ -95,20 +98,22 @@ export class BookComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
+    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       this.selectedCategory = params.get('category');
       this.currentPage = 0;
-      this.loadBooks();
+      this.loadBooks();              // paginated list for the main grid/sections
     });
 
-      const maybeObs = (this.categoryService.getCategories() as any);
+    const maybeObs = (this.categoryService.getCategories() as any);
     if (maybeObs?.subscribe) {
-      maybeObs.pipe(takeUntil(this.destroy$)).subscribe((cats: Category[]) => this.categories = cats);
+      maybeObs.pipe(takeUntil(this.destroy$)).subscribe((cats: Category[]) => (this.categories = cats));
     } else {
       this.categories = maybeObs || [];
     }
 
-     this.loadBooks();
+    // initial loads
+    this.loadBooks();
+    this.fetchSelfHelpBooks();       // independent fetch to ensure we have 5 self-help items
   }
 
   ngOnDestroy() {
@@ -120,7 +125,8 @@ export class BookComponent implements OnInit, OnDestroy {
     const limit = this.booksPerPage;
     const search = this.search || '';
     const category = this.selectedCategory || '';
-    this.booksService.list(page, limit, search, category)
+    this.booksService
+      .list(page, limit, search, category)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -130,6 +136,20 @@ export class BookComponent implements OnInit, OnDestroy {
         error: (err) => {
           console.error('Failed to load books', err);
         }
+      });
+  }
+
+  /** Fetch enough self-help books for the carousel and cap to 5 */
+  private fetchSelfHelpBooks() {
+    this.booksService
+      .list(0, 20, '', 'Self-help') // raise limit if needed
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          const all = res?.books || [];
+          this.selfHelpBooks = all.slice(0, 5);
+        },
+        error: (err) => console.error('Failed to load self-help books', err)
       });
   }
 
@@ -161,12 +181,11 @@ export class BookComponent implements OnInit, OnDestroy {
     }
   }
 
- openBookDetails(book: Book) {
-  const idOrSlug = book.slug || book._id;  // ✅ use real slug, else _id
-  if (!idOrSlug) return;
-  this.router.navigate(['/book', idOrSlug]);
-}
-
+  openBookDetails(book: Book) {
+    const idOrSlug = book.slug || book._id;
+    if (!idOrSlug) return;
+    this.router.navigate(['/book', idOrSlug]);
+  }
 
   addToCart(book: Book) {
     const item = {
@@ -178,34 +197,36 @@ export class BookComponent implements OnInit, OnDestroy {
       quantity: 1
     };
 
-     this.cartService.addToCart(item as any);
+    this.cartService.addToCart(item as any);
 
-     this.cartHttp.addItem(this.guestId, item).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (serverCart: any) => {
-         if (serverCart && Array.isArray(serverCart.items)) {
-          this.cartService.clearCart();
-          serverCart.items.forEach((si: any) => {
-            const qty = Math.max(0, Math.floor(si.quantity || 1));
-            for (let i = 0; i < qty; i++) {
-              this.cartService.addToCart({
-                title: si.title,
-                author: si.author,
-                price: si.price,
-                quantity: 1,
-                image: si.image,
-                category: si.category
-              } as any);
-            }
-          });
+    this.cartHttp
+      .addItem(this.guestId, item)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (serverCart: any) => {
+          if (serverCart && Array.isArray(serverCart.items)) {
+            this.cartService.clearCart();
+            serverCart.items.forEach((si: any) => {
+              const qty = Math.max(0, Math.floor(si.quantity || 1));
+              for (let i = 0; i < qty; i++) {
+                this.cartService.addToCart({
+                  title: si.title,
+                  author: si.author,
+                  price: si.price,
+                  quantity: 1,
+                  image: si.image,
+                  category: si.category
+                } as any);
+              }
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Failed to persist cart:', err);
+          this.cartService.updateQuantity(item.title, -1);
+          alert('Could not add to cart — please try again.');
         }
-      },
-      error: (err) => {
-        console.error('Failed to persist cart:', err);
-        
-        this.cartService.updateQuantity(item.title, -1);
-        alert('Could not add to cart — please try again.');
-      }
-    });
+      });
   }
 
   viewAllCategories() {
