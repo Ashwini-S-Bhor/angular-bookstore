@@ -1,347 +1,62 @@
-/* ========== Base (mobile-first) ========== */
+/* Card container */
 .bulk-wrapper {
   width: 100%;
-  max-width: 600px;   // caps width on larger screens
-  margin: 0 auto 24px;  // removed top margin (avoids gap under navbar)
-  padding: 20px;
+  max-width: min(760px, 92vw);
+  margin: 0 auto 24px;   /* no top gap under navbar */
+  padding: clamp(14px, 4vw, 30px);
   background: linear-gradient(135deg, #fdfbfb, #ebedee);
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.6s ease-in-out;
-
-  .title {
-    text-align: center;
-    font-size: clamp(1.25rem, 3.5vw, 2rem);
-    font-weight: 700;
-    color: #3f51b5;
-    margin: 0 0 6px;  // reset top margin
-  }
-
-  .subtitle {
-    text-align: center;
-    font-size: clamp(0.9rem, 2.6vw, 1rem);
-    color: #666;
-    margin: 0 0 18px; // reset top margin
-  }
-
-  .bulk-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    .form-field {
-      width: 100%;
-    /* ===========================
-   Bulk Purchase – Responsive SCSS
-   Mobile-first, fluid, a11y-minded
-=========================== */
-
-/* -------- Theme tokens -------- */
-:root {
-  /* spacing scale */
-  --space-0: 0;
-  --space-1: 6px;
-  --space-2: 10px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 18px;
-  --space-6: 20px;
-  --space-7: 24px;
-  --space-8: 30px;
-
-  /* radius & shadow */
-  --radius-s: 12px;
-  --radius-m: 16px;
-  --radius-l: 20px;
-  --elev-1: 0 8px 20px rgba(0,0,0,.10);
-  --elev-0: 0 4px 12px rgba(0,0,0,.08);
-
-  /* colors */
-  --bg-card: linear-gradient(135deg, #fdfbfb, #ebedee);
-  --bg-page: #f6f8fb;
-  --brand: #3f51b5;
-  --brand-ink: #303f9f;
-  --ink-2: #666;
-
-  /* fluid type */
-  --fs-title: clamp(1.25rem, 3.5vw, 2rem);
-  --fs-sub: clamp(.9rem, 2.6vw, 1rem);
-  --fs-btn: clamp(1rem, 2.8vw, 1.1rem);
-}
-
-/* Dark mode tweak (optional) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-card: linear-gradient(135deg, #1b1f27, #232a34);
-    --bg-page: #0f1217;
-    --ink-2: #9aa3af;
-  }
-}
-
-/* Page reset */
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg-page); }
-
-/* Kill small gap under navbar ONLY on this page */
-.page-bulk .mat-toolbar,
-.bulk-purchase-container .mat-toolbar {
-  box-shadow: none !important;
-  border-bottom: 1px solid rgba(0,0,0,.06);
-}
-
-/* ========== Card ========== */
-.bulk-wrapper {
-  width: 100%;
-  /* cap on large screens, but let it breathe on mid screens */
-  max-width: min(760px, 92vw);
-  margin: 0 auto var(--space-7);        /* no top gap */
-  padding: clamp(14px, 4vw, var(--space-8));
-  background: var(--bg-card);
-  border-radius: var(--radius-m);
-  box-shadow: var(--elev-1);
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
   animation: fadeIn .6s ease-in-out;
-
-  /* Respect safe areas (iOS notches) */
-  padding-left: max(env(safe-area-inset-left), clamp(14px, 4vw, var(--space-8)));
-  padding-right: max(env(safe-area-inset-right), clamp(14px, 4vw, var(--space-8)));
-
-  .title {
-    text-align: center;
-    font-size: var(--fs-title);
-    font-weight: 700;
-    color: var(--brand);
-    margin: var(--space-0) 0 var(--space-1);
-  }
-
-  .subtitle {
-    text-align: center;
-    font-size: var(--fs-sub);
-    color: var(--ink-2);
-    margin: var(--space-0) 0 var(--space-5);
-  }
-
-  /* ----- Form layout ----- */
-  .bulk-form {
-    display: grid;
-    /* two behaviors:
-       - phones: single column w/ comfy gaps
-       - tablets/desktops: auto-fit responsive columns (min 280px) */
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-
-    .form-field { width: 100%; }
-
-    .submit-btn {
-      margin-top: var(--space-1);
-      padding: 12px;
-      width: 100%;
-      min-height: 44px;                  /* tap target */
-      font-size: var(--fs-btn);
-      font-weight: 600;
-      border-radius: 12px;
-      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
-
-      &:hover {
-        background-color: var(--brand-ink);
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 8px 18px rgba(63,81,181,.4);
-      }
-    }
-  }
 }
 
-/* ========== Responsive upgrades with fewer breakpoints ========== */
+.title { text-align:center; font-size: clamp(1.25rem,3.5vw,2rem); margin:0 0 6px; color:#3f51b5; font-weight:700; }
+.subtitle { text-align:center; font-size: clamp(.9rem,2.6vw,1rem); margin:0 0 18px; color:#666; }
 
-/* Small phones (≤360px): tighter padding & shadows */
-@media (max-width: 360px) {
-  .bulk-wrapper {
-    border-radius: var(--radius-s);
-    box-shadow: var(--elev-0);
-  }
-  .bulk-wrapper .bulk-form { gap: var(--space-3); }
-  .bulk-wrapper .submit-btn { padding: 10px; }
+/* Grid that adapts automatically */
+.bulk-form {
+  display: grid;
+  grid-template-columns: 1fr;          /* phones: single column */
+  gap: 16px;
 }
+.form-field { width: 100%; }
+.submit-btn { width:100%; min-height:44px; font-weight:600; border-radius:12px; }
 
-/* Tablets up (≥600px): start using auto-fit grid */
+/* ≥600px: 2 responsive columns; .wide spans both */
 @media (min-width: 600px) {
-  .bulk-wrapper {
-    max-width: min(680px, 94vw);
-    border-radius: 18px;
-  }
-  .bulk-wrapper .bulk-form {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 18px;
-  }
+  .bulk-form { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+  .bulk-form .wide { grid-column: 1 / -1; }
 }
 
-/* Laptops/Desktop (≥900px): a touch more space */
+/* ≥900px: a touch more space */
 @media (min-width: 900px) {
-  .bulk-wrapper {
-    max-width: 760px;
-    border-radius: var(--radius-l);
-  }
-  .bulk-wrapper .subtitle { margin-bottom: 25px; }
-  .bulk-wrapper .bulk-form { gap: 20px; }
+  .bulk-wrapper { max-width: 760px; border-radius: 20px; }
+  .bulk-form { gap: 20px; }
+  .subtitle { margin-bottom: 25px; }
 }
 
-/* ========== Motion & accessibility ========== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Small phones: slightly tighter */
+@media (max-width: 360px) {
+  .bulk-wrapper { padding-left: 14px; padding-right: 14px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .bulk-form { gap: 12px; }
+  .submit-btn { padding: 10px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bulk-wrapper { animation: none; }
-  .bulk-wrapper .submit-btn { transition: none; }
-}
-
-/* ========== Angular Material niceties ========== */
-/* Remove reserved hint/error space when empty */
-.mat-mdc-form-field-subscript-wrapper:empty { display: none; }
-/* Ensure no leftover min-height creates gaps */
-.mat-mdc-form-field-subscript-wrapper { min-height: 0; margin-top: 0; }
-
-/* Remove stray margin under toolbar + card sequence */
+/* Remove the "fake gap" under toolbar on this page */
 .mat-toolbar + .bulk-wrapper { margin-top: 0; }
 
+/* Footer/top gap fixes (optional but recommended)
+   Wrap page with .page-bulk if you can: toolbar + content + footer */
+html, body { height: 100%; margin: 0; }
+.page-bulk { min-height: 100dvh; display: flex; flex-direction: column; background:#f6f8fb; }
+.page-bulk .mat-toolbar { flex:0 0 auto; box-shadow:none !important; border-bottom:1px solid rgba(0,0,0,.06); }
+.page-bulk main { flex:1 1 auto; display:flex; align-items: stretch; }
+.page-bulk footer { flex:0 0 auto; margin-top:auto; }
 
-    .submit-btn {
-      margin-top: 6px;
-      padding: 12px;
-      font-size: clamp(1rem, 2.8vw, 1.1rem);
-      font-weight: 600;
-      border-radius: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+/* Motion prefs */
+@keyframes fadeIn { from {opacity:0; transform: translateY(15px);} to {opacity:1; transform: translateY(0);} }
+@media (prefers-reduced-motion: reduce) { .bulk-wrapper { animation:none; } .submit-btn { transition:none; } }
 
-      &:hover {
-        background-color: #303f9f;
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 8px 18px rgba(63, 81, 181, 0.4);
-      }
-    }
-  }
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .bulk-wrapper {
-    animation: none;
-
-    .submit-btn {
-      transition: none;
-    }
-  }
-}
-
-/* ========== Breakpoints ========== */
-
-/* Small phones (≤ 360px) */
-@media (max-width: 360px) {
-  .bulk-wrapper {
-    margin: 0 auto 12px; // no top margin
-    padding: 14px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-
-    .bulk-form {
-      gap: 12px;
-
-      .submit-btn {
-        padding: 10px;
-      }
-    }
-  }
-}
-
-/* Large phones (361–600px) */
-@media (min-width: 361px) and (max-width: 600px) {
-  .bulk-wrapper {
-    margin: 0 auto 20px;
-    padding: 18px;
-  }
-}
-
-/* Tablets (601–900px) */
-@media (min-width: 601px) and (max-width: 900px) {
-  .bulk-wrapper {
-    max-width: 680px;
-    padding: 24px;
-    border-radius: 18px;
-
-    .bulk-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-  }
-}
-
-/* Laptops/Desktops (≥ 901px) */
-@media (min-width: 901px) {
-  .bulk-wrapper {
-    max-width: 760px;
-    padding: 30px;
-    border-radius: 20px;
-
-    .subtitle {
-      margin-bottom: 25px;
-    }
-
-    .bulk-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-  }
-}
-
-/* ========== Animations ========== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ====== Angular Material tweak ====== */
-/* remove empty hint/error reserved space */
-.mat-mdc-form-field-subscript-wrapper:empty {
-  display: none;
-}
-
-/* body reset */
-body { margin: 0; }
-/* Page reset (prevents the thin band at very top/edges) */
-body { margin: 0; background: #f6f8fb; }
-
-/* 1) Kill the small gap right under the navbar on this page */
-.mat-toolbar + .bulk-wrapper {    /* navbar immediately followed by the form */
-  margin-top: 0;                  /* you previously had 24px */
-}
-.bulk-wrapper { margin: 0 auto 24px; }  /* keep bottom spacing only */
-
-/* If your navbar has a drop shadow/elevation, it can look like a "gap".
-   Remove the shadow on this route only (optional but looks cleaner). */
-.page-bulk .mat-toolbar,
-.bulk-purchase-container .mat-toolbar {
-  box-shadow: none !important;
-  border-bottom: 1px solid rgba(0,0,0,.06);  /* subtle separator instead */
-}
-
-/* 2) Remove reserved space under fields when there’s no hint/error */
+/* Angular Material: hide empty hint space */
 .mat-mdc-form-field-subscript-wrapper:empty { display: none; }
 .mat-mdc-form-field-subscript-wrapper { min-height: 0; margin-top: 0; }
-
-/* Make the submit button truly full-width and tidy */
-.submit-btn {
-  width: 100%;
-  min-height: 44px;
-}
-
-/* Tighten tiny blank band above the title (headings have default top margins) */
-.bulk-wrapper .title { margin: 0 0 6px; }
-.bulk-wrapper .subtitle { margin: 0 0 18px; }
-
-/* Optional (nice on small mobiles): slightly tighter card padding at ≤360px */
-@media (max-width: 360px) {
-  .bulk-wrapper { padding-left: 14px; padding-right: 14px; }
-}
-}

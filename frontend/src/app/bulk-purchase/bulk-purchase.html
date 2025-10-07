@@ -1,11 +1,8 @@
 <div class="bulk-wrapper">
   <h2 class="title">📚 Bulk Purchase Request</h2>
-  <p class="subtitle">
-    Fill in the details below to request bulk book purchases (minimum 10 copies).
-  </p>
+  <p class="subtitle">Fill in the details below to request bulk book purchases (minimum 10 copies).</p>
 
   <form [formGroup]="bulkForm" (ngSubmit)="onSubmit()" class="bulk-form">
-    
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Your full name" />
@@ -26,7 +23,7 @@
       <input matInput formControlName="organization" placeholder="Company / Institute" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field">
+    <mat-form-field appearance="outline" class="form-field wide">
       <mat-label>Book Title</mat-label>
       <input matInput formControlName="bookTitle" placeholder="Which book?" />
     </mat-form-field>
@@ -37,12 +34,12 @@
       <mat-hint>📦 Minimum 10 copies</mat-hint>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field">
+    <mat-form-field appearance="outline" class="form-field wide">
       <mat-label>Message (optional)</mat-label>
       <textarea matInput rows="3" formControlName="message"></textarea>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" class="submit-btn" type="submit">
+    <button mat-raised-button color="primary" class="submit-btn wide" type="submit">
       🚀 Submit Request
     </button>
   </form>
