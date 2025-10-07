@@ -2,7 +2,7 @@
 .bulk-wrapper {
   width: 100%;
   max-width: 600px;   // caps width on larger screens
-  margin: 24px auto;
+  margin: 0 auto 24px;  // removed top margin (avoids gap under navbar)
   padding: 20px;
   background: linear-gradient(135deg, #fdfbfb, #ebedee);
   border-radius: 16px;
@@ -14,14 +14,14 @@
     font-size: clamp(1.25rem, 3.5vw, 2rem);
     font-weight: 700;
     color: #3f51b5;
-    margin-bottom: 6px;
+    margin: 0 0 6px;  // reset top margin
   }
 
   .subtitle {
     text-align: center;
     font-size: clamp(0.9rem, 2.6vw, 1rem);
     color: #666;
-    margin-bottom: 18px;
+    margin: 0 0 18px; // reset top margin
   }
 
   .bulk-form {
@@ -66,7 +66,7 @@
 /* Small phones (≤ 360px) */
 @media (max-width: 360px) {
   .bulk-wrapper {
-    margin: 12px auto;
+    margin: 0 auto 12px; // no top margin
     padding: 14px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -84,7 +84,7 @@
 /* Large phones (361–600px) */
 @media (min-width: 361px) and (max-width: 600px) {
   .bulk-wrapper {
-    margin: 20px auto;
+    margin: 0 auto 20px;
     padding: 18px;
   }
 }
@@ -128,3 +128,12 @@
   from { opacity: 0; transform: translateY(15px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ====== Angular Material tweak ====== */
+/* remove empty hint/error reserved space */
+.mat-mdc-form-field-subscript-wrapper:empty {
+  display: none;
+}
+
+/* body reset */
+body { margin: 0; }
