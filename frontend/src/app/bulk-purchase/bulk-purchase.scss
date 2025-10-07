@@ -137,3 +137,38 @@
 
 /* body reset */
 body { margin: 0; }
+/* Page reset (prevents the thin band at very top/edges) */
+body { margin: 0; background: #f6f8fb; }
+
+/* 1) Kill the small gap right under the navbar on this page */
+.mat-toolbar + .bulk-wrapper {    /* navbar immediately followed by the form */
+  margin-top: 0;                  /* you previously had 24px */
+}
+.bulk-wrapper { margin: 0 auto 24px; }  /* keep bottom spacing only */
+
+/* If your navbar has a drop shadow/elevation, it can look like a "gap".
+   Remove the shadow on this route only (optional but looks cleaner). */
+.page-bulk .mat-toolbar,
+.bulk-purchase-container .mat-toolbar {
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(0,0,0,.06);  /* subtle separator instead */
+}
+
+/* 2) Remove reserved space under fields when there’s no hint/error */
+.mat-mdc-form-field-subscript-wrapper:empty { display: none; }
+.mat-mdc-form-field-subscript-wrapper { min-height: 0; margin-top: 0; }
+
+/* Make the submit button truly full-width and tidy */
+.submit-btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+/* Tighten tiny blank band above the title (headings have default top margins) */
+.bulk-wrapper .title { margin: 0 0 6px; }
+.bulk-wrapper .subtitle { margin: 0 0 18px; }
+
+/* Optional (nice on small mobiles): slightly tighter card padding at ≤360px */
+@media (max-width: 360px) {
+  .bulk-wrapper { padding-left: 14px; padding-right: 14px; }
+}
